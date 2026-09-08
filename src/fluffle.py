@@ -7,7 +7,9 @@ from typing import Any
 from yarl import URL
 
 async def fluffle(request: Request, env: Any) -> Response:
-    image_url = request.url.split("url=")[1]
+    url = URL()
+    queries = url.query
+    image_url = queries["url"]
     raise ValueError(f"{image_url = }")
     headers = {"User-Agent": user_agent, "content-type": "image/*"}
     image_data = await fetch(image_url)
