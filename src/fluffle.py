@@ -18,7 +18,7 @@ async def fluffle(request: Request) -> Response:
     python_bytes = array_buffer.to_py().tobytes()
     buffer = io.BytesIO(python_bytes)
     headers = {
-        "User-Agent": "ExcessiveSpaceSearcher/1.0 (by dev at excessive space)"
+        "User-Agent": user_agent
     }
     files = {
         "file": ("image." + content_type.split("/")[1], buffer.getvalue(), content_type)
@@ -36,6 +36,7 @@ async def fluffle(request: Request) -> Response:
         result = response.json()
     result = {
         "success": True,
-        "data": result
+        "data": result,
+        "user-agent": user_agent,
     }
     return Response(json.dumps(result), headers=json_header, status=200)
