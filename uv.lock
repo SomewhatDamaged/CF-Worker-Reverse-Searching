@@ -97,7 +97,6 @@ source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "leb128" },
     { name = "packaging" },
-    { name = "pyodide-cli" },
     { name = "wheel" },
 ]
 sdist = { url = "https://files.pythonhosted.org/packages/b1/b5/7b376cfcb4dca2516f6474f17f38d0e521850728c25a3669fdfbecccc9db/auditwheel_emscripten-0.2.5.tar.gz", hash = "sha256:183706b60570844913d4039140c95d4914cfa56b8f8afbc5ee53eaefa5056ea9", size = 5836757, upload-time = "2026-06-01T08:51:23.484Z" }
