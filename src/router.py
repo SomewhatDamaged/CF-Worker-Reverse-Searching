@@ -11,8 +11,8 @@ class Default(WorkerEntrypoint):
             # raise ValueError(f"url.pathname: {pathname}")
             pathname = pathname[self.env.PATH_DEPTH:]
             if request.method == "GET":
-                if pathname.startswith("/hashcompare"):
-                    return await self.hashcompare(request)
+                if pathname.startswith("/test"):
+                    return Response(status=100)
                 # ...
             if request.method == "POST":
                 if pathname.startswith("/fluffle"):
@@ -22,5 +22,3 @@ class Default(WorkerEntrypoint):
         except Exception:
             headers = {"content-type": "text/plain;charset=UTF-8"}
             return Response(f"Traceback: {traceback.format_exc()}", headers=headers, status=500)
-
-
