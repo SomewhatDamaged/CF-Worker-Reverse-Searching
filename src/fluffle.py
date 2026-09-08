@@ -1,5 +1,5 @@
 import io
-from js import fetch, Uint8Array
+from js import fetch, Uint8Array, Object
 from workers import Response, Request
 from json import dumps
 from defs import *
@@ -12,42 +12,30 @@ async def fluffle(request: Request, env: Any) -> Response:
     url = URL(request.url)
     queries = url.query
     image_url = queries["url"]
-    image_data = await fetch(image_url)
+    image_config = {
+        "width": 1000,
+        "height": 1000,
+        "fit": "scale-down",
+        "format": "png",
+        "quality": 95
+    }
+    js_image_opts = Object.fromEntries(Object.entries(image_config))
+    js_cf_block = Object.fromEntries(Object.entries({
+        "image": js_image_opts
+    }))
+    fetch_options = Object.fromEntries(Object.entries({
+        "cf": js_cf_block
+    }))
+    image_data = await fetch(image_url, fetch_options)
     array_buffer = await image_data.arrayBuffer()
 
-    from PIL import Image
-    image_bytes = bytes(Uint8Array.new(array_buffer))
-    img = Image.open(io.BytesIO(image_bytes))
-    img_format = img.format if img.format else "JPEG"
-    content_type = "image/" + img_format.lower()
-    scale_factor = 0.50
-    width, height = img.size
-    new_width = int(width * scale_factor)
-    new_height = int(height * scale_factor)
 
 
-    output_buffer = io.BytesIO()
-    if img_format.upper() in ["JPEG", "MPO"]:
-        img.save(output_buffer, format=img_format, quality=95, optimize=True)
-    else:
-        img.save(output_buffer, format=img_format, optimize=True)
-
-    output_bytes = output_buffer.getvalue()
-    if len(output_bytes) >= MAX_BYTES:
-        img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
-        output_buffer = io.BytesIO()
-        if img_format.upper() in ["JPEG", "MPO"]:
-            img.save(output_buffer, format=img_format, quality=95, optimize=True)
-        else:
-            img.save(output_buffer, format=img_format, optimize=True)
-        output_bytes = output_buffer.getvalue()
-
-
-    output_array_buffer = Uint8Array.new(output_bytes).buffer
+    output_array_buffer = Uint8Array.new(array_buffer).buffer
     js_result = await env.RPC.search(
         output_array_buffer,
         "8",
-        content_type
+        "image/png"
     )
     result = {
         "success": True,
