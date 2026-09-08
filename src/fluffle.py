@@ -20,8 +20,8 @@ async def fluffle(request: Request, env: Any) -> Response:
     img = Image.open(io.BytesIO(image_bytes))
     img_format = img.format if img.format else "JPEG"
     content_type = "image/" + img_format.lower()
-    scale_factor = 0.95
-    while True:
+    scale_factor = 0.80
+    for _ in range(10):
         output_buffer = io.BytesIO()
         if img_format.upper() in ["JPEG", "MPO"]:
             img.save(output_buffer, format=img_format, quality=95, optimize=True)
