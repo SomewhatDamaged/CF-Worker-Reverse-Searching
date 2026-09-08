@@ -27,6 +27,7 @@ async def fluffle(request: Request, env: Any) -> Response:
         "cf": js_cf_block
     }))
     image_data = await fetch(image_url, fetch_options)
+    raise ValueError(f"Resized Header: {image_data.headers.get('cf-resized')}")
     array_buffer = await image_data.arrayBuffer()
 
     js_result = await env.RPC.search(
