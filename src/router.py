@@ -12,7 +12,6 @@ class Default(WorkerEntrypoint):
         try:
             url = urlparse(request.url)
             pathname = url.path
-            # raise ValueError(f"url.pathname: {pathname}")
             pathname = pathname[self.env.PATH_DEPTH:]
             if request.method == "GET":
                 if pathname.startswith("/test"):
