@@ -18,8 +18,5 @@
           "service": "bridge-for-fluffle",
           "entrypoint": "RpcService"
       }
-  ],
-  "image_resizing": {
-    "binding": "IMAGES"
-  }
+  ]
 }
