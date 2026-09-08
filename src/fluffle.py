@@ -1,6 +1,6 @@
 import os
 from urllib.parse import urlsplit, parse_qs
-from js import globalThis, eval as js_eval
+from js import globalThis, eval as js_eval, fetch
 from workers import Response, Request
 import json
 from defs import *
@@ -10,7 +10,7 @@ from typing import Any
 async def fluffle(request: Request, env: Any) -> Response:
     url = urlsplit(request.url)
     queries = parse_qs(url.query)
-    image_data = await js.fetch(queries["url"][0])
+    image_data = await fetch(queries["url"][0])
     content_type = image_data.headers.get("content-type", "image/png")
     blob = await image_data.blob()
 
