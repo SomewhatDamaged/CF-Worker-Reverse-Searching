@@ -17,7 +17,7 @@ async def fluffle(request: Request, env: Any) -> Response:
         "height": 1000,
         "fit": "scale-down",
         "format": "jpeg",
-        "quality": 95
+        "quality": 85
     }
     js_image_opts = Object.fromEntries(Object.entries(image_config))
     js_cf_block = Object.fromEntries(Object.entries({
