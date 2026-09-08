@@ -528,66 +528,6 @@ wheels = [
 ]
 
 [[package]]
-name = "pyodide-build"
-version = "0.39.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "attrs" },
-    { name = "auditwheel-emscripten" },
-    { name = "build" },
-    { name = "cattrs" },
-    { name = "click" },
-    { name = "packaging" },
-    { name = "platformdirs" },
-    { name = "pyodide-cli" },
-    { name = "pyodide-lock" },
-    { name = "requests" },
-    { name = "rich" },
-    { name = "ruamel-yaml" },
-    { name = "virtualenv" },
-    { name = "wheel" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/e3/aa/b32d950bc3baffe0c6be7e43458a1c30f686c65029bd4075ffb554ed6666/pyodide_build-0.39.0.tar.gz", hash = "sha256:2003985abd9b7cf7acf5236d9c7aa049973f5bf1cc1b36ca1031e63477ba3ca4", size = 389944, upload-time = "2026-08-03T18:07:01.404Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/15/f8/4b1ebcdcf3107a8867afd399d330e45170d909e8a8ca674f1bf6eb59969f/pyodide_build-0.39.0-py3-none-any.whl", hash = "sha256:88f645880baac9a983b63216f6fff631bb74ccd29c60eea13caa8e3ef358385e", size = 137255, upload-time = "2026-08-03T18:07:00.093Z" },
-]
-
-[[package]]
-name = "pyodide-cli"
-version = "0.5.0"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "click" },
-    { name = "rich" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/f1/44/fe74049e3e776bd56fae8bd9370900d6d6dc5e541299ae90cb2330a9a8a4/pyodide_cli-0.5.0.tar.gz", hash = "sha256:14df0797e791558b6976d4612f9df9619334f8914bfe3efbdd22e3886f5275b7", size = 12630, upload-time = "2026-01-28T03:29:06.623Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/4a/07/76977bbd73c686df55fbc3685c6c336158dc11b2ba155abe3e3a802447b2/pyodide_cli-0.5.0-py3-none-any.whl", hash = "sha256:24c02736f1d6c99396f5e9330fd30bd98db88cf49ef059b62b025fa1f5f6e29c", size = 12684, upload-time = "2026-01-28T03:29:05.527Z" },
-]
-
-[[package]]
-name = "pyodide-lock"
-version = "0.2.1"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "attrs" },
-    { name = "cattrs" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/86/e1/72874a2efee51666c634d3eb3d04e5b297af3e54333f2febd7cd4e80d8ae/pyodide_lock-0.2.1.tar.gz", hash = "sha256:a2a60f7e87d97391be887cb00050382c192bb5a86451b1dbd44abe7272e674c3", size = 55145, upload-time = "2026-08-27T03:54:42.176Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/d3/4a/bd0bfb7aabdada073774b4c7203069de4ba5cc515a92e489d3014c6a14d2/pyodide_lock-0.2.1-py3-none-any.whl", hash = "sha256:5181ec109ab230d0539884b29b45ddb736e5df79d9378e68a2ccd41574346879", size = 16062, upload-time = "2026-08-27T03:54:41.07Z" },
-]
-
-[[package]]
-name = "pyodide-py"
-version = "314.0.6"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/65/5a/da47f8e91c0e47a74025bf8e1aec8ddc2f3ff17974977dfb34ee8da93396/pyodide_py-314.0.6.tar.gz", hash = "sha256:7bc3a9f7ec7bead703b4b3495ef97ce4868f7bea5209f421afe5441c7ced497a", size = 62813, upload-time = "2026-08-25T07:00:50.538Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/2e/e0/4dffe56b7aad80bd527d1514e717e11661c361f0f4ad30b7be6e514371f6/pyodide_py-314.0.6-py3-none-any.whl", hash = "sha256:e1c613566d7b5f94046316171f85288e5db0f1c6fd4eb4f21f7a658e57ef2195", size = 70398, upload-time = "2026-08-25T07:00:49.23Z" },
-]
-
-[[package]]
 name = "pyproject-hooks"
 version = "1.2.0"
 source = { registry = "https://pypi.org/simple" }
@@ -606,21 +546,6 @@ dependencies = [
 sdist = { url = "https://files.pythonhosted.org/packages/91/96/0f93e27c9f60a650838f2118159aa115fd5732c0716247917b7ba7ede665/python_discovery-1.6.0.tar.gz", hash = "sha256:6393b4eae1be8b2182670635e7baff89ac21cb9f8e86fd1ff40c7b1144febb4c", size = 82849, upload-time = "2026-08-28T17:30:02.366Z" }
 wheels = [
     { url = "https://files.pythonhosted.org/packages/43/5e/21abf578182fb15006a57faf3711a1e659e29d600d19b6e557eae908c81d/python_discovery-1.6.0-py3-none-any.whl", hash = "sha256:d4e244cf17b8b29819ed78003d55fbacf86eda23425b075454fff9271b79377a", size = 38451, upload-time = "2026-08-28T17:30:01.236Z" },
-]
-
-[[package]]
-name = "requests"
-version = "2.34.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "certifi" },
-    { name = "charset-normalizer" },
-    { name = "idna" },
-    { name = "urllib3" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/ac/c3/e2a2b89f2d3e2179abd6d00ebd70bff6273f37fb3e0cc209f48b39d00cbf/requests-2.34.2.tar.gz", hash = "sha256:f288924cae4e29463698d6d60bc6a4da69c89185ad1e0bcc4104f584e960b9ed", size = 142856, upload-time = "2026-05-14T19:25:27.735Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/a0/f4/c67b0b3f1b9245e8d266f0f112c500d50e5b4e83cb6f3b71b6528104182a/requests-2.34.2-py3-none-any.whl", hash = "sha256:2a0d60c172f83ac6ab31e4554906c0f3b3588d37b5cb939b1c061f4907e278e0", size = 73075, upload-time = "2026-05-14T19:25:26.443Z" },
 ]
 
 [[package]]
