@@ -4,6 +4,8 @@ from workers import Response, Request
 import json
 import io
 from defs import *
+import aiohttp
+import asyncio
 
 async def fluffle(request: Request) -> Response:
     url = urlsplit(request.url)
@@ -18,18 +20,14 @@ async def fluffle(request: Request) -> Response:
     headers = {
         "User-Agent": "Excessive.Space Reverse Searcher/dev@excessive.space/1.0"
     }
-    files = {
-        "file": buffer.getvalue()
-    }
-    data = {
-        "limit": 8
-    }
-    response = await pyfetch("https://api.fluffle.xyz/exact-search-by-file", {"method": "POST"}, headers=headers,
-                             files=files, data=data)
-    response = await response.json()
-    response = response.to_py()
+    data = aiohttp.FormData()
+    data.add_field("file", buffer.getvalue(), filename="image", content_type="image/*")
+    data.add_field("limit", "8", content_type="text/plain")
+    async with aiohttp.ClientSession() as session:
+        async with session.post('https://api.fluffle.xyz/exact-search-by-file', headers=headers, data=data) as response:
+            result = await response.json()
     result = {
         "success": True,
-        "data": response
+        "data": result
     }
     return Response(json.dumps(result), headers=json_header, status=200)
