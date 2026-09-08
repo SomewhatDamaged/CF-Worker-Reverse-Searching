@@ -5,7 +5,6 @@ import json
 from defs import *
 from pyodide.ffi import to_js
 from typing import Any
-import bridge
 
 async def fluffle(request: Request, env: Any) -> Response:
     url = urlsplit(request.url)
@@ -15,6 +14,8 @@ async def fluffle(request: Request, env: Any) -> Response:
     image_data = await js.fetch(queries["url"][0])
     content_type = image_data.headers.get("content-type", "image/png")
     blob = await image_data.blob()
+    bridge = js.require("./bridge.js")
+    
     js_result = await bridge.search(
         to_js(blob),
         "8",
