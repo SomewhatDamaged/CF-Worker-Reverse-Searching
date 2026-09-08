@@ -18,7 +18,7 @@ async def fluffle(request: Request, env: Any) -> Response:
         "8",
         content_type
     )
-    result = js_result.to_py()
+    result = js_result
     result = {
         "success": True,
         "data": result,
