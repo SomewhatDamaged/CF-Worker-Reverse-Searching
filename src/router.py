@@ -16,7 +16,7 @@ class Default(WorkerEntrypoint):
                 # ...
             if request.method == "POST":
                 if pathname.startswith("/fluffle"):
-                    return await fluffle(request)
+                    return await fluffle(request, self.env)
                 # ...
             return Response(status=404)
         except Exception:
