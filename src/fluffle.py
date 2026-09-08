@@ -27,7 +27,7 @@ async def fluffle(request: Request, env: Any) -> Response:
         # Print files
         for file in files:
             data.append(str(os.path.join(root, file)))
-    raise ValueError(f"Path: {'/n'.join(data)}")
+    raise ValueError(f"Path: {'\n'.join(data)}")
     js_path = os.path.join("bridge.js")
     with open(js_path, "r") as f:
         js_code = f.read()
