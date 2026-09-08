@@ -4,9 +4,9 @@ from workers import Response, Request
 import json
 import io
 from defs import *
-import aiohttp
 
 async def fluffle(request: Request) -> Response:
+    import aiohttp
     url = urlsplit(request.url)
     queries = parse_qs(url.query)
     if "url" not in queries.keys():
