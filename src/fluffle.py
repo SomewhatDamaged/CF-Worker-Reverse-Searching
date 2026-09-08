@@ -4,10 +4,11 @@ from workers import Response, Request
 from json import dumps
 from defs import *
 from typing import Any
+from yarl import URL
 
 async def fluffle(request: Request, env: Any) -> Response:
-    url = urlsplit(request.url)
-    queries = parse_qs(url.query)
+    url = URL(request.url)
+    queries = url.query
     image_url = queries["url"][0]
     raise ValueError(f"{image_url = }")
     headers = {"User-Agent": user_agent, "content-type": "image/*"}
