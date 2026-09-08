@@ -7,6 +7,7 @@ from defs import *
 
 async def fluffle(request: Request) -> Response:
     import httpx
+    from httpx_socks import AsyncProxyTransport
     url = urlsplit(request.url)
     queries = parse_qs(url.query)
     if "url" not in queries.keys():
@@ -26,7 +27,7 @@ async def fluffle(request: Request) -> Response:
     data = {
         "limit": "8"
     }
-    transport = httpx.AsyncHTTPTransport(local_address=None)
+    transport = AsyncProxyTransport.from_url('socks5://localhost:1080')
     async with httpx.AsyncClient(headers=headers, transport=transport, http1=True, http2=False) as client:
         response = await client.post(
             'https://api.fluffle.xyz/exact-search-by-file',
