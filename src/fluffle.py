@@ -22,7 +22,8 @@ async def fluffle(request: Request) -> Response:
     data = aiohttp.FormData()
     data.add_field("file", buffer.getvalue(), filename="image", content_type="image/*")
     data.add_field("limit", "8", content_type="text/plain")
-    async with aiohttp.ClientSession() as session:
+    connector = aiohttp.TCPConnector(use_dns_cache=False)
+    async with aiohttp.ClientSession(connector=connector) as session:
         async with session.post('https://api.fluffle.xyz/exact-search-by-file', headers=headers, data=data) as response:
             result = await response.json()
     result = {
