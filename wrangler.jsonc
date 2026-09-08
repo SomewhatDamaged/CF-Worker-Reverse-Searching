@@ -2,7 +2,7 @@
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "cf-worker-reverse-searching",
   "main": "src/router.py",
-  "compatibility_date": "2026-09-04",
+  "compatibility_date": "2025-09-04",
   "compatibility_flags": [
     "python_workers"
   ],
