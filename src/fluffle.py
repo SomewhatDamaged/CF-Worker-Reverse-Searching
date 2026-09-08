@@ -13,8 +13,8 @@ async def fluffle(request: Request, env: Any) -> Response:
     queries = url.query
     image_url = queries["url"]
     image_config = {
-        "width": 2000,
-        "height": 2000,
+        "width": 1000,
+        "height": 1000,
         "fit": "scale-down",
         "format": "png",
         "quality": 95
