@@ -13,8 +13,8 @@ async def fluffle(request: Request, env: Any) -> Response:
     queries = url.query
     image_url = queries["url"]
     image_config = {
-        "width": 1000,
-        "height": 1000,
+        "width": 2000,
+        "height": 2000,
         "fit": "scale-down",
         "format": "png",
         "quality": 95
@@ -31,7 +31,7 @@ async def fluffle(request: Request, env: Any) -> Response:
 
     js_result = await env.RPC.search(
         array_buffer,
-        "8",
+        "16",
         "image/png"
     )
     result = {
