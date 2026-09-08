@@ -13,11 +13,11 @@ async def fluffle(request: Request, env: Any) -> Response:
     fetch_options = Object.new()
     js_cf_block = Object.new()
     js_image_opts = Object.new()
-    js_image_opts.width = 2000
-    js_image_opts.height = 2000
+    js_image_opts.width = 1200
+    js_image_opts.height = 1200
     js_image_opts.fit = "scale-down"
     js_image_opts.format = "jpeg"
-    js_image_opts.quality = 85
+    js_image_opts.quality = 80
     js_cf_block.image = js_image_opts
     fetch_options.cf = js_cf_block
     image_data = await fetch(image_url, fetch_options)
