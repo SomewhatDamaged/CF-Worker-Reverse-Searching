@@ -16,7 +16,7 @@ async def fluffle(request: Request, env: Any) -> Response:
     blob = await image_data.blob()
     data = []
     data.append(f"{Path.cwd() = }")
-    for path in Path.cdw().rglob("*"):
+    for path in Path.cwd().rglob("*"):
         data.append(str(path))
     raise ValueError(f"Path: {'/n'.join(data)}")
     js_path = os.path.join("bridge.js")
