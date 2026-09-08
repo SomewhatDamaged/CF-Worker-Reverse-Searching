@@ -4,8 +4,7 @@ version = "0.1.0"
 description = "Reverse search endpoints for various providers."
 requires-python = ">=3.13"
 dependencies = [
-    "fastapi",
-    "aiohttp"
+    "aiohttp",
 ]
 
 [dependency-groups]
