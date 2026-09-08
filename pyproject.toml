@@ -3,7 +3,5 @@ name = "cf-worker-reverse-searching"
 version = "0.1.0"
 requires-python = ">=3.12"
 dependencies = [
-    "httpx",
-    "httpx_socks",
     "workers-py",
 ]
