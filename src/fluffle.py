@@ -16,7 +16,7 @@ async def fluffle(request: Request, env: Any) -> Response:
         "width": 1000,
         "height": 1000,
         "fit": "scale-down",
-        "format": "png",
+        "format": "jpeg",
         "quality": 95
     }
     js_image_opts = Object.fromEntries(Object.entries(image_config))
@@ -32,7 +32,7 @@ async def fluffle(request: Request, env: Any) -> Response:
     js_result = await env.RPC.search(
         array_buffer,
         "16",
-        "image/png"
+        "image/jpeg"
     )
     result = {
         "success": True,
