@@ -13,10 +13,8 @@ async def fluffle(request: Request) -> Response:
     image_data = await js.fetch(queries["url"][0])
     content_type = image_data.headers.get("content-type")
     blob = await image_data.blob()
-    try:
-        from cloudflare import sockets
-    except ImportError:
-        sockets = js.require("cloudflare:sockets")
+    cloudflare_sockets = getattr(js, "cloudflare:sockets")
+    connect = cloudflare_sockets.connect
     boundary = "----WebKitFormBoundaryExcessiveSpace"
     body_parts = [f"--{boundary}\r\n".encode(),
                   f'Content-Disposition: form-data; name="file"; filename="image.{content_type.split("/")[1]}"\r\n'.encode(),
@@ -32,7 +30,7 @@ async def fluffle(request: Request) -> Response:
         f"Content-Length: {len(full_body)}\r\n"
         f"Connection: close\r\n\r\n"
     ).encode()
-    socket = sockets.connect("api.fluffle.xyz/exact-search-by-file:443", to_js({"secureTransport": "on"}))
+    socket = connect("api.fluffle.xyz/exact-search-by-file:443", to_js({"secureTransport": "on"}))
     writer = socket.writable.getWriter()
     reader = socket.readable.getReader()
     await writer.write(js.Uint8Array.new(to_js(http_headers)))
