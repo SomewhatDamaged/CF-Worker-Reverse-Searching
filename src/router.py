@@ -1,3 +1,5 @@
+from typing import Union
+
 from fluffle import fluffle
 from urllib.parse import urlparse
 from workers import WorkerEntrypoint, Response, Request
