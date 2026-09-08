@@ -51,6 +51,6 @@ class Default(WorkerEntrypoint):
         response = await response.json()
         result = {
             "success": True,
-            "data": await response.json()
+            "data": await response
         }
         return Response(json.dumps(result), headers=self.json_header, status=200)
