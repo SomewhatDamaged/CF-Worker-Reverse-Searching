@@ -8,8 +8,11 @@ from typing import Any
 async def fluffle(request: Request, env: Any) -> Response:
     url = urlsplit(request.url)
     queries = parse_qs(url.query)
-    image_data = await fetch(queries["url"][0])
-    content_type = image_data.headers.get("content-type", "image/png")
+    image_url = queries["url"][0]
+    image_data = await fetch(image_url)
+    content_type = image_data.headers.get("content-type", None)
+    if content_type is None:
+        content_type = "image/" + url.path.rsplit(".", 1)[1]
     array_buffer = await image_data.arrayBuffer()
     js_result = await env.RPC.search(
         array_buffer,
