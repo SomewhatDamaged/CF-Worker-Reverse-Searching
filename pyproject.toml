@@ -1,5 +1,5 @@
 [project]
-name = "Reverse Search"
+name = "reverse_search"
 version = "0.1.0"
 description = "Reverse search endpoints for various providers."
 requires-python = ">=3.13"
