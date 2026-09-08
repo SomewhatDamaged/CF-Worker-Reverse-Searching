@@ -23,7 +23,7 @@ async def fluffle(request: Request) -> Response:
         },
         "body": form_data
     }
-    js_response = await js.fetch(url, to_js(options))
+    js_response = await js.fetch("https://api.fluffle.xyz/exact-search-by-file", to_js(options))
     result = json.loads(await js_response.text())
     result = {
         "success": True,
