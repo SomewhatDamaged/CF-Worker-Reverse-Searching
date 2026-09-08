@@ -36,7 +36,8 @@ class Default(WorkerEntrypoint):
         image_data = await pyfetch(queries["url"][0])
         blob = await image_data.blob()
         array_buffer = await blob.arrayBuffer()
-        buffer = io.BytesIO(array_buffer)
+        python_bytes = array_buffer.to_py().tobytes()
+        buffer = io.BytesIO(python_bytes)
         headers = {
             "User-Agent": "Excessive.Space Reverse Searcher/dev@excessive.space/1.0"
         }
