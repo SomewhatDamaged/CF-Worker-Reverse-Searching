@@ -1,10 +1,11 @@
+import sys
 from urllib.parse import urlsplit, parse_qs
 import js
+import importlib
 from workers import Response, Request
 import json
 from defs import *
 from pyodide.ffi import to_js
-import pyodide.code
 from typing import Any
 
 async def fluffle(request: Request, env: Any) -> Response:
@@ -12,12 +13,13 @@ async def fluffle(request: Request, env: Any) -> Response:
     queries = parse_qs(url.query)
     if "url" not in queries.keys():
         return Response('{"error": "Missing \'url\' parameter"}', headers=json_header, status=400)
+
+    if "/session/metadata" not in sys.path:
+        sys.path.append("/session/metadata")
+    bridge = importlib.import_module("bridge")
     image_data = await js.fetch(queries["url"][0])
     content_type = image_data.headers.get("content-type", "image/png")
     blob = await image_data.blob()
-    bridge_promise = pyodide.code.run_js('import("./bridge.js")')
-
-    bridge = await bridge_promise
 
     js_result = await bridge.search(
         to_js(blob),
