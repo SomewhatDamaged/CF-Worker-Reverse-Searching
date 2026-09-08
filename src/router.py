@@ -1,9 +1,11 @@
+import io
 from urllib.parse import urlsplit, parse_qs, urlparse
 from workers import WorkerEntrypoint, Response, Request
 import traceback
-from json import dumps, loads
+import json
 from typing import Union
 from js import fetch as pyfetch
+from PIL import Image
 
 class Default(WorkerEntrypoint):
     json_header = {"content-type": "application/json;charset=UTF-8"}
@@ -16,15 +18,11 @@ class Default(WorkerEntrypoint):
             if request.method == "GET":
                 if pathname.startswith("/hashcompare"):
                     return await self.hashcompare(request)
-                if pathname.startswith("/hashlist"):
-                    return await self.hashlist(request)
-                if pathname.startswith("/scamscore"):
-                    return await self.scamscore(request)
+                # ...
             if request.method == "POST":
                 if pathname.startswith("/fluffle"):
                     return await self.fluffle(request)
-                if pathname.startswith("/ocr") and False: # This endpoint currently disabled.
-                    return await self.ocr(request)
+                # ...
             return Response(status=404)
         except Exception:
             headers = {"content-type": "text/plain;charset=UTF-8"}
@@ -36,4 +34,29 @@ class Default(WorkerEntrypoint):
         queries = parse_qs(url.query)
         if "url" not in queries.keys():
             return Response('{"error": "Missing \'url\' parameter"}', headers=self.json_header, status=400)
-        return Response(f"great success: {url}", headers={"content-type": "text/plain;charset=UTF-8"}, status=200)
+        image_data = await pyfetch(queries["url"][0])
+        blob = await image_data.blob()
+        array_buffer = await blob.arrayBuffer()
+        image = Image.open(io.BytesIO(array_buffer))
+        width, height = image.size
+        def calculate_size(width, height, target):
+            scale = target / min(width, height)
+            return round(width * scale), round(height * scale)
+        image.thumbnail(calculate_size(width, height, 256))
+        buffer = io.BytesIO()
+        image.save(buffer, "png")
+        headers = {
+            "User-Agent": "Excessive.Space Reverse Searcher/dev@excessive.space/1.0"
+        }
+        files = {
+            "file": buffer.getvalue()
+        }
+        data = {
+            "limit": 8
+        }
+        response = await pyfetch("https://api.fluffle.xyz/exact-search-by-file", {"method": "POST"}, header=headers, files=files, data=data)
+        result = {
+            "success": True,
+            "data": await response.json()
+        }
+        return Response(json.dumps(result), headers=self.json_header, status=200)
