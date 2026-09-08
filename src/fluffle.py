@@ -15,9 +15,18 @@ async def fluffle(request: Request, env: Any) -> Response:
     content_type = image_data.headers.get("content-type", "image/png")
     blob = await image_data.blob()
     data = []
-    data.append(f"{Path.cwd() = }")
-    for path in Path.cwd().rglob("*"):
-        data.append(str(path))
+    current_dir = os.getcwd()
+    data.append(f"{current_dir = }")
+
+    # Recursively loop through directories and files
+    print("All files and directories underneath:")
+    for root, dirs, files in os.walk(current_dir):
+        # Print subdirectories
+        for directory in dirs:
+            data.append(str(os.path.join(root, directory)))
+        # Print files
+        for file in files:
+            data.append(str(os.path.join(root, file)))
     raise ValueError(f"Path: {'/n'.join(data)}")
     js_path = os.path.join("bridge.js")
     with open(js_path, "r") as f:
