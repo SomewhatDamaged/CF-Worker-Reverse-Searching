@@ -13,18 +13,45 @@ async def fluffle(request: Request) -> Response:
     image_data = await js.fetch(queries["url"][0])
     content_type = image_data.headers.get("content-type")
     blob = await image_data.blob()
-    form_data = js.FormData.new()
-    form_data.append("file", blob, "image." + content_type.split("/")[1])
-    form_data.append("limit", "8")
-    options = {
-        "method": "POST",
-        "headers": {
-            "User-Agent": user_agent
-        },
-        "body": form_data
-    }
-    js_response = await js.fetch("https://api.fluffle.xyz/exact-search-by-file", to_js(options))
-    result = json.loads(await js_response.text())
+    try:
+        from cloudflare import sockets
+    except ImportError:
+        sockets = js.require("cloudflare:sockets")
+    boundary = "----WebKitFormBoundaryExcessiveSpace"
+    body_parts = [f"--{boundary}\r\n".encode(),
+                  f'Content-Disposition: form-data; name="file"; filename="image.{content_type.split("/")[1]}"\r\n'.encode(),
+                  f"Content-Type: {content_type}\r\n\r\n".encode(), blob, b"\r\n", f"--{boundary}\r\n".encode(),
+                  f'Content-Disposition: form-data; name="limit"\r\n\r\n'.encode(), b"8\r\n",
+                  f"--{boundary}--\r\n".encode()]
+    full_body = b"".join(body_parts)
+    http_headers = (
+        f"POST /exact-search-by-file HTTP/1.1\r\n"
+        f"Host: api.fluffle.xyz\r\n"
+        f"User-Agent: {user_agent}\r\n"
+        f"Content-Type: multipart/form-data; boundary={boundary}\r\n"
+        f"Content-Length: {len(full_body)}\r\n"
+        f"Connection: close\r\n\r\n"
+    ).encode()
+    socket = sockets.connect("api.fluffle.xyz/exact-search-by-file:443", to_js({"secureTransport": "on"}))
+    writer = socket.writable.getWriter()
+    reader = socket.readable.getReader()
+    await writer.write(js.Uint8Array.new(to_js(http_headers)))
+    await writer.write(js.Uint8Array.new(to_js(full_body)))
+    await writer.close()
+    chunks = []
+    while True:
+        result = await reader.read()
+        if result.done:
+            break
+        chunks.append(bytes(result.value))
+
+    raw_response = b"".join(chunks).decode('utf-8', errors='ignore')
+    parts = raw_response.split("\r\n\r\n", 1)
+    if len(parts) < 2:
+        return Response(json.dumps({"error": "Invalid HTTP response raw format from server", "raw": raw_response}), headers=json_header, status=400)
+
+    json_string = parts[1]
+    result = json.loads(json_string)
     result = {
         "success": True,
         "data": result,
