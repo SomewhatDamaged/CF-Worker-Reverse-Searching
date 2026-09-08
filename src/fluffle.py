@@ -1,5 +1,6 @@
+import os
 from urllib.parse import urlsplit, parse_qs
-import js
+from js import globalThis, eval as js_eval
 from workers import Response, Request
 import json
 from defs import *
@@ -9,12 +10,15 @@ from typing import Any
 async def fluffle(request: Request, env: Any) -> Response:
     url = urlsplit(request.url)
     queries = parse_qs(url.query)
-    bridge = js.bridge
     image_data = await js.fetch(queries["url"][0])
     content_type = image_data.headers.get("content-type", "image/png")
     blob = await image_data.blob()
 
-    js_result = await bridge.search(
+    js_path = os.path.join(os.path.dirname(__file__), "bridge.js")
+    with open(js_path, "r") as f:
+        js_code = f.read()
+    js_eval(js_code)
+    js_result = await globalThis.search(
         to_js(blob),
         "8",
         content_type

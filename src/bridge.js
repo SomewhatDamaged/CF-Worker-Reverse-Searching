@@ -60,3 +60,5 @@ export async function search(imageBytes, limit, contentType) {
   const parts = rawResponse.split("\r\n\r\n");
   return JSON.parse(parts[1]);
 }
+
+globalThis.search = search;
