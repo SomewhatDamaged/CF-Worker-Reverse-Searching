@@ -14,7 +14,7 @@ class Default(WorkerEntrypoint):
             url = urlparse(request.url)
             pathname = url.path
             # raise ValueError(f"url.pathname: {pathname}")
-            pathname = pathname[7:]
+            pathname = pathname[self.env.PATH_DEPTH:]
             if request.method == "GET":
                 if pathname.startswith("/hashcompare"):
                     return await self.hashcompare(request)
