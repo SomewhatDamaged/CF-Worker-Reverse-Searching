@@ -1,3 +1,1 @@
 aiohttp
-workers-py
-workers-runtime-sdk
