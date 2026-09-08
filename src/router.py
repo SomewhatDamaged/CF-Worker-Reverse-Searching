@@ -1,5 +1,5 @@
 from fluffle import fluffle
-from urllib.parse import urlsplit, parse_qs, urlparse
+from urllib.parse import urlparse
 from workers import WorkerEntrypoint, Response, Request
 import traceback
 

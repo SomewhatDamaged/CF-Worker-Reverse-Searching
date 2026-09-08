@@ -1,12 +1,7 @@
 [project]
-name = "reverse_search"
+name = "cf-worker-reverse-searching"
 version = "0.1.0"
-description = "Reverse search endpoints for various providers."
 requires-python = ">=3.13"
 dependencies = [
-    "aiohttp",
-]
-
-[dependency-groups]
-dev = [
+    "aiohttp>=3.14.3",
 ]
