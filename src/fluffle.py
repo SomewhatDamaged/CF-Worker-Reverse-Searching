@@ -6,7 +6,7 @@ import io
 from defs import *
 
 async def fluffle(request: Request) -> Response:
-    import aiohttp
+    import httpx
     url = urlsplit(request.url)
     queries = parse_qs(url.query)
     if "url" not in queries.keys():
@@ -19,13 +19,20 @@ async def fluffle(request: Request) -> Response:
     headers = {
         "User-Agent": "Excessive.Space Reverse Searcher/dev@excessive.space/1.0"
     }
-    data = aiohttp.FormData()
-    data.add_field("file", buffer.getvalue(), filename="image", content_type="image/*")
-    data.add_field("limit", "8", content_type="text/plain")
-    connector = aiohttp.TCPConnector(use_dns_cache=False)
-    async with aiohttp.ClientSession(connector=connector) as session:
-        async with session.post('https://api.fluffle.xyz/exact-search-by-file', headers=headers, data=data) as response:
-            result = await response.json()
+    files = {
+        "file": ("image", buffer.getvalue(), "image/*")
+    }
+    data = {
+        "limit": "8"
+    }
+    async with httpx.AsyncClient() as client:
+        response = await client.post(
+            'https://api.fluffle.xyz/exact-search-by-file',
+            headers=headers,
+            data=data,
+            files=files
+        )
+        result = response.json()
     result = {
         "success": True,
         "data": result
