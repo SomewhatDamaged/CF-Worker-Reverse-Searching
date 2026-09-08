@@ -10,7 +10,7 @@ async def fluffle(request: Request) -> Response:
     url = urlsplit(request.url)
     queries = parse_qs(url.query)
     if "url" not in queries.keys():
-        return Response('{"error": "Missing \'url\' parameter"}', headers=self.json_header, status=400)
+        return Response('{"error": "Missing \'url\' parameter"}', headers=json_header, status=400)
     image_data = await pyfetch(queries["url"][0])
     blob = await image_data.blob()
     array_buffer = await blob.arrayBuffer()

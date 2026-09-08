@@ -4,7 +4,7 @@
   "main": "src/router.py",
   "compatibility_date": "2026-09-04",
   "compatibility_flags": [
-    "python_workers",
+    "python_workers"
   ],
   "observability": {
     "enabled": true
