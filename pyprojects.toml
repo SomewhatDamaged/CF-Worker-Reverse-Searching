@@ -5,6 +5,7 @@ description = "Reverse search endpoints for various providers."
 requires-python = ">=3.13"
 dependencies = [
     "aiohttp",
+	"workers-py",
 ]
 
 [dependency-groups]
