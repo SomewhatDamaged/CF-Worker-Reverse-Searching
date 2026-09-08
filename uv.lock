@@ -699,46 +699,6 @@ wheels = [
 ]
 
 [[package]]
-name = "workers-kv-py"
-version = "1.2.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "aiohttp" },
-    { name = "requests" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/9a/cc/be7f9e962716379724c74789034cc3fbb8ec6000d9ad9311cbcd05f61a53/workers-kv.py-1.2.2.tar.gz", hash = "sha256:f2f4df0719ef77262066a5bfb93960ede11a2d390218adb7692b23209915de3d", size = 3970, upload-time = "2022-08-15T16:03:03.519Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/77/f9/91298ce961d0687f60ff899bf97bf72dfe058bd9cd956fba53773c021887/workers_kv.py-1.2.2-py2.py3-none-any.whl", hash = "sha256:e13a34c9d0d6960bb99083dc6b76a12a7876c5755dbd04b44b8456b23a3edbda", size = 5194, upload-time = "2022-08-15T16:02:57.373Z" },
-    { url = "https://files.pythonhosted.org/packages/5c/92/810cfc753c6d36bb4c2adadca5768841c67e3880096c88b79e860ae10565/workers_kv.py-1.2.2-py3-none-any.whl", hash = "sha256:e351e80e3c1afa9bb3d3fa9d194ef55fdb5bdc25e794771bc22d1081580a3fde", size = 5190, upload-time = "2022-08-15T16:02:59.283Z" },
-]
-
-[[package]]
-name = "workers-py"
-version = "1.17.2"
-source = { registry = "https://pypi.org/simple" }
-dependencies = [
-    { name = "click" },
-    { name = "pyjson5" },
-    { name = "pyodide-cli" },
-    { name = "pyodide-py" },
-    { name = "rich" },
-    { name = "workers-runtime-sdk" },
-]
-sdist = { url = "https://files.pythonhosted.org/packages/ba/78/f89aeacc65003286ea4908992c7babf725a69e1ca43882027498e840a7c0/workers_py-1.17.2.tar.gz", hash = "sha256:ea97e1beb29e5552fd352b0a99680691df08067a2709ac92c1cc4e42c17838ae", size = 70830, upload-time = "2026-09-07T15:17:47.666Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/e6/ba/eb10796490b38995403f465ca5b87495eb6c5569ae79c60cc083d9914123/workers_py-1.17.2-py3-none-any.whl", hash = "sha256:043eeaa53a0c25e93bab66c0459f3fc1f2f2760609ddb0e78d4df906c308471f", size = 17158, upload-time = "2026-09-07T15:17:46.409Z" },
-]
-
-[[package]]
-name = "workers-runtime-sdk"
-version = "1.8.4"
-source = { registry = "https://pypi.org/simple" }
-sdist = { url = "https://files.pythonhosted.org/packages/da/91/f5fd1757821612dd37313c4ad28cda71bba7589bf53d1fff813bd62c4aca/workers_runtime_sdk-1.8.4.tar.gz", hash = "sha256:bf1ff3f309f079c2989b1a573b857337f4b3f258490fa69c77d48a9b7c9cca5e", size = 130283, upload-time = "2026-09-08T05:59:11.407Z" }
-wheels = [
-    { url = "https://files.pythonhosted.org/packages/d2/9f/545247f39e9b11ec71438a34e4d37e8c214c717acd883559a71ed79b7c9f/workers_runtime_sdk-1.8.4-py3-none-any.whl", hash = "sha256:d4dce17c041c052f3da46938511ede264c5aa28b9033f32adcb26b429bab1936", size = 35892, upload-time = "2026-09-08T05:59:10.118Z" },
-]
-
-[[package]]
 name = "yarl"
 version = "1.24.5"
 source = { registry = "https://pypi.org/simple" }
