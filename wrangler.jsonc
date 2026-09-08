@@ -11,9 +11,5 @@
   },
   "vars":{
     "PATH_DEPTH": 7
-  },
-  "services": [{
-    "binding": "FLUFFLE_BRIDGE",
-    "service": "cf-worker-reverse-searching-bridge"
-  }]
+  }
 }
