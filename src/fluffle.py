@@ -14,7 +14,7 @@ async def fluffle(request: Request, env: Any) -> Response:
     content_type = image_data.headers.get("content-type", "image/png")
     blob = await image_data.blob()
 
-    js_path = os.path.join(os.path.dirname(__file__), "bridge.js")
+    js_path = os.path.join("src/", "bridge.js")
     with open(js_path, "r") as f:
         js_code = f.read()
     js_eval(js_code)
