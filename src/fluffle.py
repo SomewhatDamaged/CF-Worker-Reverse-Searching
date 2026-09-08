@@ -4,6 +4,7 @@ from workers import Response, Request
 import json
 from defs import *
 from pyodide.ffi import to_js
+import pyodide.code
 from typing import Any
 
 async def fluffle(request: Request, env: Any) -> Response:
@@ -14,7 +15,8 @@ async def fluffle(request: Request, env: Any) -> Response:
     image_data = await js.fetch(queries["url"][0])
     content_type = image_data.headers.get("content-type", "image/png")
     blob = await image_data.blob()
-    bridge_promise = js.pyodide.code.run_js('import("./bridge.js")')
+    bridge_promise = pyodide.code.run_js('import("./bridge.js")')
+
     bridge = await bridge_promise
 
     js_result = await bridge.search(
