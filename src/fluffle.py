@@ -6,6 +6,7 @@ import json
 from defs import *
 from pyodide.ffi import to_js
 from typing import Any
+from pathlib import Path
 
 async def fluffle(request: Request, env: Any) -> Response:
     url = urlsplit(request.url)
@@ -13,7 +14,11 @@ async def fluffle(request: Request, env: Any) -> Response:
     image_data = await fetch(queries["url"][0])
     content_type = image_data.headers.get("content-type", "image/png")
     blob = await image_data.blob()
-    raise ValueError(f"Path: {os.path.curdir}")
+    data = []
+    data.append(f"{Path.cwd() = }")
+    for path in Path.cdw().rglob("*"):
+        data.append(str(path))
+    raise ValueError(f"Path: {'/n'.join(data)}")
     js_path = os.path.join("bridge.js")
     with open(js_path, "r") as f:
         js_code = f.read()
