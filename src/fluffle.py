@@ -7,7 +7,7 @@ from typing import Any
 from yarl import URL
 
 async def fluffle(request: Request, env: Any) -> Response:
-    url = URL()
+    url = URL(request.url)
     queries = url.query
     image_url = queries["url"]
     raise ValueError(f"{image_url = }")
