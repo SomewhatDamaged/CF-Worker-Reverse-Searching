@@ -48,6 +48,7 @@ class Default(WorkerEntrypoint):
             "limit": 8
         }
         response = await pyfetch("https://api.fluffle.xyz/exact-search-by-file", {"method": "POST"}, header=headers, files=files, data=data)
+        response = await response.json()
         result = {
             "success": True,
             "data": await response.json()
