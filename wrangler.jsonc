@@ -18,5 +18,11 @@
           "service": "bridge-for-fluffle",
           "entrypoint": "RpcService"
       }
-  ]
+  ],
+  	"kv_namespaces": [
+		{
+			"binding": "KEYS",
+			"id": "68e27c55cdf34d9791ddf245f1d21bcd"
+		}
+  	]
 }
