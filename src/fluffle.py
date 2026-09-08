@@ -4,6 +4,7 @@ from workers import Response, Request
 import json
 from defs import *
 from pyodide.ffi import to_js
+import pyodide.code
 
 async def fluffle(request: Request) -> Response:
     url = urlsplit(request.url)
@@ -13,7 +14,7 @@ async def fluffle(request: Request) -> Response:
     image_data = await js.fetch(queries["url"][0])
     content_type = image_data.headers.get("content-type")
     blob = await image_data.blob()
-    cloudflare_sockets = js.import_module("cloudflare:sockets")
+    cloudflare_sockets = pyodide.code.run_js('import("cloudflare:sockets")')
     connect = cloudflare_sockets.connect
     boundary = "----WebKitFormBoundaryExcessiveSpace"
     body_parts = [f"--{boundary}\r\n".encode(),
