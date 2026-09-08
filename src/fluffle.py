@@ -5,7 +5,6 @@ import json
 import io
 from defs import *
 import aiohttp
-import asyncio
 
 async def fluffle(request: Request) -> Response:
     url = urlsplit(request.url)
