@@ -33,9 +33,9 @@ class Default(WorkerEntrypoint):
     async def authenticate(self, request: Request, endpoint_name: str) -> Union[Response,str]:
         headers = dict(request.headers)
         if "authorization" not in headers.keys():
-            return Response('{"error": "Missing \'authorization\' parameter"}', headers=json_header, status=400)
+            return Response('{"error": "Missing \'authorization\' parameter"}', headers=json_header, status=401)
         if not headers["authorization"].startswith("Bearer "):
-            return Response('{"error": "Bad \'authorization\' parameter"}', headers=json_header, status=400)
+            return Response('{"error": "Bad \'authorization\' parameter"}', headers=json_header, status=401)
         key = headers["authorization"].split(" ")[1]
         key_data = str(await self.env.KEYS.get(key)).strip()
         if not key_data.startswith("{"):
