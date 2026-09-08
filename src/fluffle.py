@@ -7,9 +7,11 @@ from typing import Any
 from yarl import URL
 
 async def fluffle(request: Request, env: Any) -> Response:
+    # Process url
     url = URL(request.url)
     queries = url.query
     image_url = queries["url"]
+    # JS wrapping for the Cloudflare Image Resizing on fetch()
     fetch_options = Object.new()
     js_cf_block = Object.new()
     js_image_opts = Object.new()
@@ -20,9 +22,11 @@ async def fluffle(request: Request, env: Any) -> Response:
     js_image_opts.quality = 80
     js_cf_block.image = js_image_opts
     fetch_options.cf = js_cf_block
+    # Actually do the fetch()
     image_data = await fetch(image_url, fetch_options)
+    # Convert into an array buffer
     array_buffer = await image_data.arrayBuffer()
-
+    # Hit up the RPC to prod Fluffle
     js_result = await env.RPC.search(
         array_buffer,
         "16",
