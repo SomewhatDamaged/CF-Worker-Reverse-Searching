@@ -147,10 +147,6 @@ version = "0.1.0"
 source = { virtual = "." }
 dependencies = [
     { name = "aiohttp" },
-    { name = "pyodide-build" },
-    { name = "requests" },
-    { name = "workers-kv-py" },
-    { name = "workers-py" },
 ]
 
 [package.metadata]
