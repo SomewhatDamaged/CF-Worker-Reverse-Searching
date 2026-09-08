@@ -17,7 +17,7 @@ async def fluffle(request: Request) -> Response:
     python_bytes = array_buffer.to_py().tobytes()
     buffer = io.BytesIO(python_bytes)
     headers = {
-        "User-Agent": "Excessive.Space Reverse Searcher/dev@excessive.space/1.0"
+        "User-Agent": "ExcessiveSpace-ReverseSearcher-v1"
     }
     files = {
         "file": ("image", buffer.getvalue(), "image/*")
