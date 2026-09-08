@@ -5,7 +5,6 @@ import traceback
 import json
 from typing import Union
 from js import fetch as pyfetch
-from PIL import Image
 
 class Default(WorkerEntrypoint):
     json_header = {"content-type": "application/json;charset=UTF-8"}
@@ -37,14 +36,7 @@ class Default(WorkerEntrypoint):
         image_data = await pyfetch(queries["url"][0])
         blob = await image_data.blob()
         array_buffer = await blob.arrayBuffer()
-        image = Image.open(io.BytesIO(array_buffer))
-        width, height = image.size
-        def calculate_size(width, height, target):
-            scale = target / min(width, height)
-            return round(width * scale), round(height * scale)
-        image.thumbnail(calculate_size(width, height, 256))
-        buffer = io.BytesIO()
-        image.save(buffer, "png")
+        buffer = io.BytesIO(array_buffer)
         headers = {
             "User-Agent": "Excessive.Space Reverse Searcher/dev@excessive.space/1.0"
         }
