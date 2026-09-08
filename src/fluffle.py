@@ -10,8 +10,7 @@ async def fluffle(request: Request, env: Any) -> Response:
     url = URL(request.url)
     queries = url.query
     image_url = queries["url"]
-    headers = {"User-Agent": user_agent, "content-type": "image/*"}
-    image_data = await fetch(image_url, headers=headers)
+    image_data = await fetch(image_url)
     content_type = image_data.headers.get("content-type", None)
     if content_type is None:
         content_type = "image/" + url.path.rsplit(".", 1)[1]
