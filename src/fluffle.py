@@ -18,7 +18,7 @@ async def fluffle(request: Request) -> Response:
     python_bytes = array_buffer.to_py().tobytes()
     buffer = io.BytesIO(python_bytes)
     headers = {
-        "User-Agent": user_agent
+        "user-agent": user_agent
     }
     files = {
         "file": ("image." + content_type.split("/")[1], buffer.getvalue(), content_type)
@@ -27,7 +27,7 @@ async def fluffle(request: Request) -> Response:
         "limit": "8"
     }
     transport = httpx.AsyncHTTPTransport(local_address=None)
-    async with httpx.AsyncClient(headers=headers, transport=transport) as client:
+    async with httpx.AsyncClient(headers=headers, transport=transport, http1=True, http2=False) as client:
         response = await client.post(
             'https://api.fluffle.xyz/exact-search-by-file',
             data=data,
