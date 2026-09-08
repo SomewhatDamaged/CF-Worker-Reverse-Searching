@@ -38,8 +38,6 @@ async def fluffle(request: Request, env: Any) -> Response:
             break
         img = img.resize((new_width, new_height), Image.Resampling.LANCZOS)
 
-    output_buffer = io.BytesIO()
-    img.save(output_buffer, format="PNG")
     final_bytes = output_buffer.getvalue()
     output_array_buffer = Uint8Array.new(final_bytes).buffer
     js_result = await env.RPC.search(
