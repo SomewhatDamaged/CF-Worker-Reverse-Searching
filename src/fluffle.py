@@ -26,7 +26,8 @@ async def fluffle(request: Request) -> Response:
     data = {
         "limit": "8"
     }
-    async with httpx.AsyncClient(headers=headers) as client:
+    transport = httpx.AsyncHTTPTransport(local_address=None)
+    async with httpx.AsyncClient(headers=headers, transport=transport) as client:
         response = await client.post(
             'https://api.fluffle.xyz/exact-search-by-file',
             data=data,
