@@ -5,7 +5,7 @@ from urllib.parse import urlparse
 from workers import WorkerEntrypoint, Response, Request
 import traceback
 from defs import *
-from json import loads
+from json import loads, dumps
 
 class Default(WorkerEntrypoint):
     async def fetch(self, request: Request) -> Response:
@@ -26,13 +26,16 @@ class Default(WorkerEntrypoint):
                 # ...
             return Response(status=404)
         except Exception:
-            headers = {"content-type": "text/plain;charset=UTF-8"}
-            return Response(f"Traceback: {traceback.format_exc()}", headers=headers, status=500)
+            data = {
+                "traceback": str(traceback.format_exc()),
+                "success": False,
+            }
+            return Response(dumps(data), headers=json_header, status=500)
 
     async def authenticate(self, request: Request, endpoint_name: str) -> Union[Response,str]:
         headers = dict(request.headers)
         if "authorization" not in headers.keys():
-            return Response('{"error": "Missing \'authorization\' parameter"}', headers=json_header, status=401)
+            return Response('{"error": "Missing \'authorization\' parameter", "success": false}', headers=json_header, status=401)
         if not headers["authorization"].startswith("Bearer "):
             return Response('{"error": "Bad \'authorization\' parameter"}', headers=json_header, status=401)
         key = headers["authorization"].split(" ")[1]
