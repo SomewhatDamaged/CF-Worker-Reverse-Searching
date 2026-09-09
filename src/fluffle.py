@@ -32,8 +32,20 @@ async def fluffle(request: Request, env: Any) -> Response:
         "16",
         "image/jpeg"
     )
-    result = {
-        "success": True,
-        "data": js_result,
-    }
-    return Response(dumps(result), headers=json_header, status=200)
+    try:
+        result = {
+            "success": True,
+            "hits": format_output(dict(js_result)),
+        }
+        return Response(dumps(result), headers=json_header, status=200)
+    except Exception:
+        return Response(dumps({"success": False}), status=500)
+
+def format_output(input_array: dict) -> list:
+    assert "results" in input_array
+    output_array = []
+    for result in input_array["results"]:
+        if float(result["distance"]) < 0.8:
+            continue
+        output_array.append(result["url"])
+    return output_array
