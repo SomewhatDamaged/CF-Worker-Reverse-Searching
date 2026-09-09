@@ -32,11 +32,12 @@ async def fluffle(request: Request, env: Any) -> Response:
         "16",
         "image/jpeg"
     )
-    raise ValueError(f"{dict(js_result) = }")
+    results = format_output(dict(js_result))
     try:
         result = {
             "success": True,
-            "hits": format_output(dict(js_result)),
+            "hits": results,
+            "num_hits": len(results),
         }
         return Response(dumps(result), headers=json_header, status=200)
     except Exception:
