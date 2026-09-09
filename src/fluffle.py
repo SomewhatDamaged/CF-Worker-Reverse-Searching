@@ -11,6 +11,12 @@ async def fluffle(request: Request, env: Any) -> Response:
     url = URL(request.url)
     queries = url.query
     image_url = queries["url"]
+    if url.path.endswith(".mp4") or url.path.endswith(".webm"):
+        result = {
+            "success": False,
+            "error": "This URL ends with .mp4 or .webm format",
+        }
+        return Response(dumps(result), headers=json_header, status=415)
     # JS wrapping for the Cloudflare Image Resizing on fetch()
     fetch_options = Object.new()
     js_cf_block = Object.new()
