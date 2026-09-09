@@ -30,6 +30,8 @@ async def fluffle(request: Request, env: Any) -> Response:
     fetch_options.cf = js_cf_block
     # Actually do the fetch()
     image_data = await fetch(image_url, fetch_options)
+    if not image_data.ok:
+        return Response(dumps({"success": False}), status=400)
     # Convert into an array buffer
     array_buffer = await image_data.arrayBuffer()
     # Hit up the RPC to prod Fluffle
