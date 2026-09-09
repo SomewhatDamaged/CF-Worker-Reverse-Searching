@@ -32,6 +32,7 @@ async def fluffle(request: Request, env: Any) -> Response:
         "16",
         "image/jpeg"
     )
+    raise ValueError(f"{dict(js_result) = }")
     try:
         result = {
             "success": True,
