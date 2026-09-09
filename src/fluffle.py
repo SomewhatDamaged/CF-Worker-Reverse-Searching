@@ -49,7 +49,7 @@ async def fluffle(request: Request, env: Any) -> Response:
         }
         return Response(dumps(result), headers=json_header, status=200)
     except Exception:
-        return Response(dumps({"success": False}), status=500)
+        return Response(dumps({"success": False}), headers=json_header, status=500)
 
 def format_output(input_array: dict) -> list:
     assert "results" in input_array
