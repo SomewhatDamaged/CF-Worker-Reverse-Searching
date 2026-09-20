@@ -1,5 +1,5 @@
 import io
-from js import fetch, Uint8Array, Object
+from js import fetch, Uint8Array, Object, console
 from workers import Response, Request
 from json import dumps
 from defs import *
@@ -33,8 +33,10 @@ async def fluffle(request: Request, env: Any) -> Response:
         fetch_options.cf = js_cf_block
         # Actually do the fetch()
         image_data = await fetch(image_url, fetch_options)
+        console.log("Used CF image reduction.")
     else:
         image_data = await fetch(image_url)
+        console.log("Didn't use CF image reduction.")
     if not image_data.ok:
         return Response(dumps({"success": False}), headers=json_header, status=400)
     # Convert into an array buffer
@@ -53,7 +55,7 @@ async def fluffle(request: Request, env: Any) -> Response:
             "num_hits": len(results),
             "resized": reduce,
         }
-        json_header["cf-compression-used"] = reduce
+        console.log("Success.", result)
         return Response(dumps(result), headers=json_header, status=200)
     except Exception:
         return Response(dumps({"success": False}), headers=json_header, status=500)
