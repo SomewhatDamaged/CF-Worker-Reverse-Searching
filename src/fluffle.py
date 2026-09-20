@@ -15,11 +15,11 @@ async def fluffle(request: Request, env: Any) -> Response:
     reduce = queries.get("reduce", True)
     if str(reduce) == "false":
         reduce = False
-    video = queries.get("video", False)
-    if video or url.path.endswith(".mp4") or url.path.endswith(".webm"):
+    video = queries.get("video", "false")
+    if video.lower == "true" or url.path.endswith(".mp4") or url.path.endswith(".webm"):
         result = {
             "success": False,
-            "error": "This URL ends with .mp4 or .webm format",
+            "error": "This URL is a video.",
         }
         return Response(dumps(result), headers=json_header, status=415)
     # JS wrapping for the Cloudflare Image Resizing on fetch()
@@ -58,7 +58,7 @@ async def fluffle(request: Request, env: Any) -> Response:
             "num_hits": len(results),
             "resized": reduce,
         }
-        console.log("Success.", result)
+        console.log(f"Success: {dumps(result)}")
         return Response(dumps(result), headers=json_header, status=200)
     except Exception:
         return Response(dumps({"success": False}), headers=json_header, status=500)
