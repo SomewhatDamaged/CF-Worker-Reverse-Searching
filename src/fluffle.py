@@ -53,6 +53,7 @@ async def fluffle(request: Request, env: Any) -> Response:
             "num_hits": len(results),
             "resized": reduce,
         }
+        json_header["cf-compression-used"] = reduce
         return Response(dumps(result), headers=json_header, status=200)
     except Exception:
         return Response(dumps({"success": False}), headers=json_header, status=500)
