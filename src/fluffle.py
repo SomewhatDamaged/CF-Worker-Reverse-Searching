@@ -11,25 +11,30 @@ async def fluffle(request: Request, env: Any) -> Response:
     url = URL(request.url)
     queries = url.query
     image_url = queries["url"]
-    if url.path.endswith(".mp4") or url.path.endswith(".webm"):
+    reduce = queries.get("reduce", True)
+    video = queries.get("video", False)
+    if video or url.path.endswith(".mp4") or url.path.endswith(".webm"):
         result = {
             "success": False,
             "error": "This URL ends with .mp4 or .webm format",
         }
         return Response(dumps(result), headers=json_header, status=415)
     # JS wrapping for the Cloudflare Image Resizing on fetch()
-    fetch_options = Object.new()
-    js_cf_block = Object.new()
-    js_image_opts = Object.new()
-    js_image_opts.width = 2000
-    js_image_opts.height = 2000
-    js_image_opts.fit = "scale-down"
-    js_image_opts.format = "webp"
-    js_image_opts.quality = 80
-    js_cf_block.image = js_image_opts
-    fetch_options.cf = js_cf_block
-    # Actually do the fetch()
-    image_data = await fetch(image_url, fetch_options)
+    if reduce:
+        fetch_options = Object.new()
+        js_cf_block = Object.new()
+        js_image_opts = Object.new()
+        js_image_opts.width = 2000
+        js_image_opts.height = 2000
+        js_image_opts.fit = "scale-down"
+        js_image_opts.format = "webp"
+        js_image_opts.quality = 80
+        js_cf_block.image = js_image_opts
+        fetch_options.cf = js_cf_block
+        # Actually do the fetch()
+        image_data = await fetch(image_url, fetch_options)
+    else:
+        image_data = await fetch(image_url)
     if not image_data.ok:
         return Response(dumps({"success": False}), headers=json_header, status=400)
     # Convert into an array buffer
