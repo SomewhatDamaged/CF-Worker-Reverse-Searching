@@ -51,6 +51,7 @@ async def fluffle(request: Request, env: Any) -> Response:
             "success": True,
             "hits": results,
             "num_hits": len(results),
+            "resized": reduce,
         }
         return Response(dumps(result), headers=json_header, status=200)
     except Exception:
