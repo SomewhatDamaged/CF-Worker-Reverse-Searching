@@ -11,7 +11,6 @@ async def fluffle(request: Request, env: Any) -> Response:
     url = URL(request.url)
     queries = url.query
     image_url = queries["url"]
-    console.log("Queries: ", dict(queries))
     reduce = queries.get("reduce", True)
     if str(reduce) == "false":
         reduce = False
@@ -58,7 +57,7 @@ async def fluffle(request: Request, env: Any) -> Response:
             "num_hits": len(results),
             "resized": reduce,
         }
-        console.log(f"Success: {dumps(result)}")
+        console.log(f"Results: {len(results)}")
         return Response(dumps(result), headers=json_header, status=200)
     except Exception:
         return Response(dumps({"success": False}), headers=json_header, status=500)
