@@ -13,6 +13,8 @@ async def fluffle(request: Request, env: Any) -> Response:
     image_url = queries["url"]
     console.log("Queries: ", dict(queries))
     reduce = queries.get("reduce", True)
+    if str(reduce) == "false":
+        reduce = False
     video = queries.get("video", False)
     if video or url.path.endswith(".mp4") or url.path.endswith(".webm"):
         result = {
